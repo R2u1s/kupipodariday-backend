@@ -9,12 +9,12 @@ import { ServerException } from 'src/exceptions/server.exception';
 @Injectable()
 export class AuthService {
   constructor(
-    private jwtService: JwtService,
-    private usersService: UsersService,
-    private hashService: HashService
+    private readonly jwtService: JwtService,
+    private readonly usersService: UsersService,
+    private readonly hashService: HashService
   ) {}
 
-  auth(user: User) {
+  async auth(user: User) {
     const payload = { sub: user.id };
 
     return { access_token: this.jwtService.sign(payload) };

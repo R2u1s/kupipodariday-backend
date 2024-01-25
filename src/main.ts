@@ -4,10 +4,10 @@ import { ValidationPipe } from '@nestjs/common';
 import helmet from 'helmet';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule,{ cors: true });
   // Добавим глобальный пайплайн валидации на следующей строке
   app.useGlobalPipes(new ValidationPipe());
   app.use(helmet());
-  await app.listen(3000);
+  await app.listen(3001);
 }
 bootstrap();
