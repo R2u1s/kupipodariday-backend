@@ -4,7 +4,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, QueryFailedError, FindOneOptions } from 'typeorm';
 import { User } from '../users/entities/user.entity';
-import { hashValue,verifyHash } from 'src/helpers/hash';
+import { hashValue, verifyHash } from 'src/helpers/hash';
 import { ServerException } from 'src/exceptions/server.exception';
 import { ErrorCode } from 'src/exceptions/error-codes';
 import { Wish } from 'src/wishes/entities/wish.entity';
@@ -29,7 +29,7 @@ export class UsersService {
       return await this.userRepository.save(userHash);
     } catch (err) {
       if (err instanceof QueryFailedError) {
-        throw new ServerException(ErrorCode.AlreadyExistsUser);
+        throw new ServerException(ErrorCode.ConflictAlreadyExistsUser);
       }
     }
   }
@@ -50,13 +50,46 @@ export class UsersService {
     return this.userRepository.findOneBy({ username });
   }
 
+  async findQuery(query): Promise<User[]> {
+    const user = await this.userRepository.find({
+      where: [{ email: query }, { username: query }],
+    });
+    if (user.length > 0) {
+      return user;
+    } else {
+      throw new ServerException(ErrorCode.NotFoundUser);
+    }
+  }
+
   async updateById(id: number, updateUserDto: UpdateUserDto) {
-    const { password } = updateUserDto;
+
     const user = await this.findById(id);
+
+    if (updateUserDto.username && updateUserDto.username !== user.username) {
+      const username = await this.findQuery(updateUserDto.username);
+
+      if (username) {
+        throw new ServerException(ErrorCode.BadRequestAlreadyExistsUser);
+      }
+    }
+
+    if (updateUserDto.email && updateUserDto.email !== user.email) {
+      const useremail = await this.findQuery(updateUserDto.email);
+
+      if (useremail) {
+        throw new ServerException(ErrorCode.BadRequestAlreadyExistsEmail);
+      }
+    }
+
+    const { password } = updateUserDto;
     if (password) {
       updateUserDto.password = await hashValue(password);
     }
-    return this.userRepository.save({...user, ...updateUserDto});
+    return this.userRepository.save({
+      ...user,
+      updatedAt: new Date(),
+      ...updateUserDto
+    });
   }
 
   async removeById(id: number) {

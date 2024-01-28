@@ -1,4 +1,4 @@
-import { Controller, Get, Req, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Req, Body, Patch, Param, Delete, Post } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -52,4 +52,12 @@ export class UsersController {
   remove(@Param('id') id: string) {
     return this.usersService.removeById(+id);
   }
+
+  @Post('find')
+  async findMany(@Body('query') query: string): Promise<User[]> {
+    const user = await this.usersService.findQuery(query);
+
+    return user;
+  }
+
 }
