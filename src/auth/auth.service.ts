@@ -2,7 +2,7 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { User } from '../users/entities/user.entity';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from '../users/users.service';
-import { HashService } from 'src/hash/hash.service';
+import { verifyHash } from 'src/helpers/hash';
 import { ErrorCode } from 'src/exceptions/error-codes';
 import { ServerException } from 'src/exceptions/server.exception';
 
@@ -11,7 +11,6 @@ export class AuthService {
   constructor(
     private readonly jwtService: JwtService,
     private readonly usersService: UsersService,
-    private readonly hashService: HashService
   ) {}
 
   async auth(user: User) {
@@ -24,7 +23,7 @@ export class AuthService {
     const user = await this.usersService.findByUsername(username); 
 
     /* В идеальном случае пароль обязательно должен быть захэширован */
-    const verifyPassword = await this.hashService.verifyPassword(
+    const verifyPassword = await verifyHash(
       password,
       user.password,
     );
