@@ -14,7 +14,9 @@ export class HashService {
     return bcrypt.compare(password, hashedPassword);
   }
 
-  async getUserData(createUserDto: CreateUserDto):Promise<CreateUserDto> {
+  async getUserData<T extends { password?: string }>(
+    createUserDto: T,
+  ): Promise<Omit<T, 'password'> & { password: string }>  {
     const { password, ...rest } = createUserDto;
     const hashPassword = await this.hashPassword(password);
     return {

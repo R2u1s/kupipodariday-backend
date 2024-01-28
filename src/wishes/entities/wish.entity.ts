@@ -40,7 +40,7 @@ export class Wish {
   price: number;
 
   // поле raised. Сумма предварительного сбор или сумма, которые пользователи сейчас готовы скинуть на подарок
-  @Column({ type: 'decimal', precision: 10, scale: 2 })
+  @Column({ type: 'decimal', precision: 10, scale: 2, default: 0  })
   raised: number;
 
   // поле owner. Ссылка на пользователя, который добавил пожелание подарка

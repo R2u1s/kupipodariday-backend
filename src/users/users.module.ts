@@ -7,11 +7,12 @@ import { Wish } from '../wishes/entities/wish.entity';
 import { Offer } from '../offers/entities/offer.entity';
 import { Wishlist } from '../wishlists/entities/wishlist.entity';
 import { HashService } from 'src/hash/hash.service';
+import { WishesService } from 'src/wishes/wishes.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([User, Wish, Offer, Wishlist])],
   controllers: [UsersController],
-  providers: [UsersService,HashService],
+  providers: [UsersService,HashService,WishesService],
   exports: [UsersService],
 })
 export class UsersModule {}
