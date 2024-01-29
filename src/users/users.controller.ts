@@ -1,4 +1,4 @@
-import { Controller, Get, Req, Body, Patch, Param, Delete, Post } from '@nestjs/common';
+import { Controller, Get, Body, Patch, Param, Post } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
@@ -37,19 +37,9 @@ export class UsersController {
     return await this.wishesService.findUserWishesById(user.id);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.usersService.findById(+id);
-  }
-
   @Patch('me')
   async update(@AuthUser() user:User, @Body() updateUserDto: UpdateUserDto) {
     return this.usersService.updateById(user.id, updateUserDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.usersService.removeById(+id);
   }
 
   @Post('find')
@@ -57,6 +47,18 @@ export class UsersController {
     const user = await this.usersService.findQuery(query);
 
     return user;
+  }
+
+  @Get(':username')
+  async findByUsername(@Param('username') username: string):Promise<User> {
+    const user = await this.usersService.findByUsername(username);
+    return user;
+  }
+
+  @Get(':username/wishes')
+  async findUserWishes(@Param('username') username: string):Promise<Wish[]> {
+    const user = await this.usersService.findByUsername(username);
+    return this.usersService.findUserWishes(user.id);
   }
 
 }

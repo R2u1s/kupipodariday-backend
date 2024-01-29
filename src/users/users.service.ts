@@ -43,14 +43,29 @@ export class UsersService {
   }
 
   async findById(id: number): Promise<User> {
+    console.log(`findById ${id}`);
     return await this.userRepository.findOneBy({ id });
   }
 
   async findByUsername(username: string): Promise<User> {
-    return this.userRepository.findOneBy({ username });
+    const user = await this.userRepository.findOneBy({ username });
+    if (!user) {
+      throw new ServerException(ErrorCode.NotFoundUser);
+    }
+    return user;
   }
 
-  async findQuery(query): Promise<User[]> {
+  async findUserWishes(id: number): Promise<Wish[]> {
+    const wishes = await this.wishRepository.find({
+      where: { owner: { id } },
+    });
+    if (!wishes) {
+      throw new ServerException(ErrorCode.NotFoundWishes);
+    }
+    return wishes;
+  }
+
+  async findQuery(query:string): Promise<User[]> {
     const user = await this.userRepository.find({
       where: [{ email: query }, { username: query }],
     });
