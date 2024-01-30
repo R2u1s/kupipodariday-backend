@@ -7,8 +7,10 @@ export enum ErrorCode {
   Unauthorized,
   NotFoundUser,
   NotFoundWishes,
+  NotFoundWishlist,
   ConflictAlreadyExistsUser,
-  ConflictAlreadyExistsWish
+  ConflictAlreadyExistsWish,
+  ForbiddenNotOwner
 }
 
 export const code2message = new Map<ErrorCode, string>([
@@ -18,8 +20,10 @@ export const code2message = new Map<ErrorCode, string>([
   [ErrorCode.Unauthorized, 'Неверное имя пользоваетеля или пароль'],
   [ErrorCode.NotFoundUser, 'Пользователь не найден'],
   [ErrorCode.NotFoundWishes, 'Подарки не найдены'],
+  [ErrorCode.NotFoundWishlist, 'Коллекции не найдены'],
   [ErrorCode.ConflictAlreadyExistsUser, 'Пользователь уже существует'],
-  [ErrorCode.ConflictAlreadyExistsWish, 'Подарок уже существует']
+  [ErrorCode.ConflictAlreadyExistsWish, 'Подарок уже существует'],
+  [ErrorCode.ForbiddenNotOwner, 'Только владелец может удалять']
 ]);
 
 export const code2status = new Map<ErrorCode, HttpStatus>([
@@ -29,6 +33,8 @@ export const code2status = new Map<ErrorCode, HttpStatus>([
   [ErrorCode.Unauthorized, HttpStatus.UNAUTHORIZED],
   [ErrorCode.NotFoundUser, HttpStatus.NOT_FOUND],
   [ErrorCode.NotFoundWishes, HttpStatus.NOT_FOUND],
+  [ErrorCode.NotFoundWishlist, HttpStatus.NOT_FOUND],
   [ErrorCode.ConflictAlreadyExistsUser, HttpStatus.CONFLICT],
-  [ErrorCode.ConflictAlreadyExistsWish, HttpStatus.CONFLICT]
+  [ErrorCode.ConflictAlreadyExistsWish, HttpStatus.CONFLICT],
+  [ErrorCode.ForbiddenNotOwner, HttpStatus.FORBIDDEN]
 ]);

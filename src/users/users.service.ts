@@ -43,7 +43,6 @@ export class UsersService {
   }
 
   async findById(id: number): Promise<User> {
-    console.log(`findById ${id}`);
     return await this.userRepository.findOneBy({ id });
   }
 

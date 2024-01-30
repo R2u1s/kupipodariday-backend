@@ -5,6 +5,8 @@ import { Wish } from './entities/wish.entity';
 import { Repository,QueryFailedError, FindOneOptions } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UsersService } from 'src/users/users.service';
+import { ServerException } from 'src/exceptions/server.exception';
+import { ErrorCode } from 'src/exceptions/error-codes';
 
 @Injectable()
 export class WishesService {
@@ -29,19 +31,41 @@ export class WishesService {
     })
   }
 
-  findAll() {
-    return `This action returns all wishes`;
+  async getWishById(id: number): Promise<Wish> {
+    const wish = await this.wishRepository.findOne({
+      where: { id },
+      relations: { offers: true, owner: true },
+    });
+    if (!wish) {
+      throw new ServerException(ErrorCode.NotFoundWishes);
+    }
+    return wish;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} wish`;
+  //Поиск последних 40 подарков
+  async lastWishes(): Promise<Wish[]> {
+    return await this.wishRepository.find({
+      take: 40,
+      order: { createdAt: 'DESC' },
+    });
   }
 
-  update(id: number, updateWishDto: UpdateWishDto) {
-    return `This action updates a #${id} wish`;
+  //Поиск 20 популярных подарков
+  async topWishes(): Promise<Wish[]> {
+    return await this.wishRepository.find({
+      take: 20,
+      order: { copied: 'DESC' },
+    });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} wish`;
+  //Удаление подарка
+  async removeOne(wishId: number, userId: number) {
+    const wish = await this.getWishById(wishId);
+
+    if (userId !== wish.owner.id) {
+      throw new ServerException(ErrorCode.ForbiddenNotOwner);
+    }
+
+    return await this.wishRepository.delete(wishId);
   }
 }

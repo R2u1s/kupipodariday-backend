@@ -7,6 +7,7 @@ import { Wish } from '../wishes/entities/wish.entity';
 import { User } from '../users/entities/user.entity';
 import { UsersModule } from '../users/users.module';
 import { WishesModule } from 'src/wishes/wishes.module';
+import { UsersService } from 'src/users/users.service';
 
 @Module({
   imports: [
@@ -15,6 +16,6 @@ import { WishesModule } from 'src/wishes/wishes.module';
     WishesModule,
   ],
   controllers: [WishlistsController],
-  providers: [WishlistsService],
+  providers: [WishlistsService,UsersService],
 })
 export class WishlistsModule {}

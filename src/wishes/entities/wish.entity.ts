@@ -46,7 +46,7 @@ export class Wish {
   // поле owner. Ссылка на пользователя, который добавил пожелание подарка
   @ManyToOne(() => User, (user) => user.wishes)
   owner: User;
-
+  
   // поле description. Описание подарка
   @Column()
   @IsString()

@@ -1,13 +1,9 @@
 import {
   IsString,
   Length,
-  IsOptional,
   IsUrl,
-  IsEmail,
   IsNumber
 } from "class-validator";
-
-import { Transform } from "class-transformer";
 
 export class CreateWishDto {
   

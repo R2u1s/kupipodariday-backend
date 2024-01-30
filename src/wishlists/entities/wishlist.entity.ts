@@ -1,14 +1,13 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany, ManyToOne } from 'typeorm';
-import { IsInt, IsString, Min, Length, IsUrl, MaxLength } from 'class-validator';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToMany, ManyToOne, JoinTable } from 'typeorm';
+import { IsInt, IsString, Min, Length, IsUrl, MaxLength, IsOptional } from 'class-validator';
 import { Wish } from '../../wishes/entities/wish.entity';
 import { User } from '../../users/entities/user.entity';
 
 @Entity()
 export class Wishlist {
   // поле id
-  @IsInt()
-  @Min(0)
   @PrimaryGeneratedColumn()
+  @IsInt()
   id: number;
 
   // поле createdAt
@@ -25,11 +24,12 @@ export class Wishlist {
   @Length(1, 250)
   name: string;
 
-  // поле description. Описание подборки
+/*   // поле description. Описание подборки
   @Column()
   @IsString()
+  @IsOptional()
   @MaxLength(1500)
-  description: string;
+  description?: string; */
 
   // поле image. Ссылка на изображение обложки для подборки
   @Column()
@@ -37,7 +37,8 @@ export class Wishlist {
   image: string;
 
   // поле wishes. Список желаемых подарков
-  @OneToMany(() => Wish, (wish) => wish.name)
+  @ManyToMany(() => Wish, (wish) => wish.name)
+  @JoinTable()
   items: Wish[];
 
   // поле owner. Ссылка на владельца списка

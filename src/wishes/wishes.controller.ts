@@ -5,34 +5,44 @@ import { UpdateWishDto } from './dto/update-wish.dto';
 import { AuthUser } from 'src/common/decorators/user.decorator';
 import { JwtGuard } from 'src/auth/jwt.guard';
 import { UseGuards } from '@nestjs/common/decorators/core';
+import { Wish } from './entities/wish.entity';
+import { User } from 'src/users/entities/user.entity';
 
 @Controller('wishes')
 export class WishesController {
-  constructor(private readonly wishesService: WishesService) {}
+  constructor(private readonly wishesService: WishesService) { }
 
+  //Поиск последних 40 подарков
+  @Get('last')
+  async findLastWishes(): Promise<Wish[]> {
+    return await this.wishesService.lastWishes();
+  }
+
+  //Поиск 20 популярных подарков
+  @Get('top')
+  async findTopWishes(): Promise<Wish[]> {
+    return await this.wishesService.topWishes();
+  }
+
+  //Создание подарка
   @UseGuards(JwtGuard)
   @Post()
-  create(@Body() сreateWishDto: CreateWishDto, @AuthUser() user) {
-    return this.wishesService.create(сreateWishDto, user.id);
+  async create(@Body() сreateWishDto: CreateWishDto, @AuthUser() user) {
+    return await this.wishesService.create(сreateWishDto, user.id);
   }
 
-  @Get()
-  findAll() {
-    return this.wishesService.findAll();
-  }
-
+  //Поиск подарка по id
+  @UseGuards(JwtGuard)
   @Get(':id')
-  findMyWishes(@Param('id') id: string) {
-    return this.wishesService.findOne(+id);
+  async findWish(@Param('id') id: string) {
+    return await this.wishesService.getWishById(+id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateWishDto: UpdateWishDto) {
-    return this.wishesService.update(+id, updateWishDto);
-  }
-
+  //Удаление подарка
+  @UseGuards(JwtGuard)
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.wishesService.remove(+id);
+  async deleteWish(@Param('id') wishId: number, @AuthUser() user: User) {
+    return await this.wishesService.removeOne(wishId, user.id);
   }
+
 }
