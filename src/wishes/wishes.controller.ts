@@ -45,4 +45,10 @@ export class WishesController {
     return await this.wishesService.removeOne(wishId, user.id);
   }
 
+  //Копирование подарка к себе
+  @UseGuards(JwtGuard)
+  @Post(':id/copy')
+  async copy(@Param('id') wishId: number, @AuthUser() user) {
+    return await this.wishesService.copy(wishId, user.id);
+  }
 }

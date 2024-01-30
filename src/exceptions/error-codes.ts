@@ -10,7 +10,8 @@ export enum ErrorCode {
   NotFoundWishlist,
   ConflictAlreadyExistsUser,
   ConflictAlreadyExistsWish,
-  ForbiddenNotOwner
+  ForbiddenNotOwner,
+  ForbiddenOwnWish
 }
 
 export const code2message = new Map<ErrorCode, string>([
@@ -23,7 +24,8 @@ export const code2message = new Map<ErrorCode, string>([
   [ErrorCode.NotFoundWishlist, 'Коллекции не найдены'],
   [ErrorCode.ConflictAlreadyExistsUser, 'Пользователь уже существует'],
   [ErrorCode.ConflictAlreadyExistsWish, 'Подарок уже существует'],
-  [ErrorCode.ForbiddenNotOwner, 'Только владелец может удалять']
+  [ErrorCode.ForbiddenNotOwner, 'Только владелец может удалять'],
+  [ErrorCode.ForbiddenOwnWish, 'Нельзя копировать свой подарок'],
 ]);
 
 export const code2status = new Map<ErrorCode, HttpStatus>([
@@ -36,5 +38,6 @@ export const code2status = new Map<ErrorCode, HttpStatus>([
   [ErrorCode.NotFoundWishlist, HttpStatus.NOT_FOUND],
   [ErrorCode.ConflictAlreadyExistsUser, HttpStatus.CONFLICT],
   [ErrorCode.ConflictAlreadyExistsWish, HttpStatus.CONFLICT],
-  [ErrorCode.ForbiddenNotOwner, HttpStatus.FORBIDDEN]
+  [ErrorCode.ForbiddenNotOwner, HttpStatus.FORBIDDEN],
+  [ErrorCode.ForbiddenOwnWish, HttpStatus.FORBIDDEN]
 ]);
