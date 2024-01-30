@@ -11,7 +11,9 @@ export enum ErrorCode {
   ConflictAlreadyExistsUser,
   ConflictAlreadyExistsWish,
   ForbiddenNotOwner,
-  ForbiddenOwnWish
+  ForbiddenOwnWish,
+  ForbiddenOffer,
+  ForbiddenRaised
 }
 
 export const code2message = new Map<ErrorCode, string>([
@@ -26,6 +28,8 @@ export const code2message = new Map<ErrorCode, string>([
   [ErrorCode.ConflictAlreadyExistsWish, 'Подарок уже существует'],
   [ErrorCode.ForbiddenNotOwner, 'Только владелец может удалять'],
   [ErrorCode.ForbiddenOwnWish, 'Нельзя копировать свой подарок'],
+  [ErrorCode.ForbiddenOffer, 'Нельзя скидываться на свои подарки'],
+  [ErrorCode.ForbiddenRaised, 'Сумма больше стоимости подарка']
 ]);
 
 export const code2status = new Map<ErrorCode, HttpStatus>([
@@ -39,5 +43,7 @@ export const code2status = new Map<ErrorCode, HttpStatus>([
   [ErrorCode.ConflictAlreadyExistsUser, HttpStatus.CONFLICT],
   [ErrorCode.ConflictAlreadyExistsWish, HttpStatus.CONFLICT],
   [ErrorCode.ForbiddenNotOwner, HttpStatus.FORBIDDEN],
-  [ErrorCode.ForbiddenOwnWish, HttpStatus.FORBIDDEN]
+  [ErrorCode.ForbiddenOwnWish, HttpStatus.FORBIDDEN],
+  [ErrorCode.ForbiddenOffer, HttpStatus.FORBIDDEN],
+  [ErrorCode.ForbiddenRaised, HttpStatus.FORBIDDEN]
 ]);

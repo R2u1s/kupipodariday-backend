@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateWishDto } from './dto/create-wish.dto';
 import { UpdateWishDto } from './dto/update-wish.dto';
 import { Wish } from './entities/wish.entity';
-import { Repository, QueryFailedError, FindOneOptions } from 'typeorm';
+import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UsersService } from 'src/users/users.service';
 import { ServerException } from 'src/exceptions/server.exception';
@@ -91,5 +91,11 @@ export class WishesService {
 
     await this.create(createWishDto, user.id);
     await this.wishRepository.increment({ id: wishId }, 'copied', 1);
+  }
+
+  //Обновление информации о набронной сумме 
+  async updateRaised(wishId: number, updateData: UpdateWishDto) {
+    console.log(updateData);
+    return await this.wishRepository.update(wishId, updateData);
   }
 }

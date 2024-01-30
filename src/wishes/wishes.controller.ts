@@ -1,7 +1,6 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { WishesService } from './wishes.service';
 import { CreateWishDto } from './dto/create-wish.dto';
-import { UpdateWishDto } from './dto/update-wish.dto';
 import { AuthUser } from 'src/common/decorators/user.decorator';
 import { JwtGuard } from 'src/auth/jwt.guard';
 import { UseGuards } from '@nestjs/common/decorators/core';
