@@ -4,27 +4,26 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, QueryFailedError, FindOneOptions } from 'typeorm';
 import { User } from '../users/entities/user.entity';
-import { hashValue, verifyHash } from 'src/helpers/hash';
+import { hashValue } from 'src/helpers/hash';
 import { ServerException } from 'src/exceptions/server.exception';
 import { ErrorCode } from 'src/exceptions/error-codes';
 import { Wish } from 'src/wishes/entities/wish.entity';
 
 @Injectable()
 export class UsersService {
-
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
     @InjectRepository(Wish)
-    private readonly wishRepository: Repository<Wish>
-  ) { }
+    private readonly wishRepository: Repository<Wish>,
+  ) {}
 
   async create(createUserDto: CreateUserDto) {
     const { password } = createUserDto;
     try {
       const userHash = await this.userRepository.create({
         ...createUserDto,
-        password: await hashValue(password)
+        password: await hashValue(password),
       });
       return await this.userRepository.save(userHash);
     } catch (err) {
@@ -64,7 +63,7 @@ export class UsersService {
     return wishes;
   }
 
-  async findQuery(query:string): Promise<User[]> {
+  async findQuery(query: string): Promise<User[]> {
     const user = await this.userRepository.find({
       where: [{ email: query }, { username: query }],
     });
@@ -76,7 +75,6 @@ export class UsersService {
   }
 
   async updateById(id: number, updateUserDto: UpdateUserDto) {
-
     const user = await this.findById(id);
 
     if (updateUserDto.username && updateUserDto.username !== user.username) {
@@ -102,7 +100,7 @@ export class UsersService {
     return this.userRepository.save({
       ...user,
       updatedAt: new Date(),
-      ...updateUserDto
+      ...updateUserDto,
     });
   }
 

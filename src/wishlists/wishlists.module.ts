@@ -16,6 +16,6 @@ import { UsersService } from 'src/users/users.service';
     WishesModule,
   ],
   controllers: [WishlistsController],
-  providers: [WishlistsService,UsersService],
+  providers: [WishlistsService, UsersService],
 })
 export class WishlistsModule {}

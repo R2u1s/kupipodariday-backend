@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete } from '@nestjs/common';
 import { WishesService } from './wishes.service';
 import { CreateWishDto } from './dto/create-wish.dto';
 import { AuthUser } from 'src/common/decorators/user.decorator';
@@ -9,7 +9,7 @@ import { User } from 'src/users/entities/user.entity';
 
 @Controller('wishes')
 export class WishesController {
-  constructor(private readonly wishesService: WishesService) { }
+  constructor(private readonly wishesService: WishesService) {}
 
   //Поиск последних 40 подарков
   @Get('last')

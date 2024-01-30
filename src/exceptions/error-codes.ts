@@ -13,13 +13,22 @@ export enum ErrorCode {
   ForbiddenNotOwner,
   ForbiddenOwnWish,
   ForbiddenOffer,
-  ForbiddenRaised
+  ForbiddenRaised,
 }
 
 export const code2message = new Map<ErrorCode, string>([
-  [ErrorCode.BadRequestAlreadyExistsUser, 'Пользователь с таким именем уже существует'],
-  [ErrorCode.BadRequestAlreadyExistsEmail, 'Пользователь с таким E-mail уже существует'],
-  [ErrorCode.BadRequestAlreadyExistsWish, 'Подарок с таким именем уже существует'],
+  [
+    ErrorCode.BadRequestAlreadyExistsUser,
+    'Пользователь с таким именем уже существует',
+  ],
+  [
+    ErrorCode.BadRequestAlreadyExistsEmail,
+    'Пользователь с таким E-mail уже существует',
+  ],
+  [
+    ErrorCode.BadRequestAlreadyExistsWish,
+    'Подарок с таким именем уже существует',
+  ],
   [ErrorCode.Unauthorized, 'Неверное имя пользоваетеля или пароль'],
   [ErrorCode.NotFoundUser, 'Пользователь не найден'],
   [ErrorCode.NotFoundWishes, 'Подарки не найдены'],
@@ -29,7 +38,7 @@ export const code2message = new Map<ErrorCode, string>([
   [ErrorCode.ForbiddenNotOwner, 'Только владелец может удалять'],
   [ErrorCode.ForbiddenOwnWish, 'Нельзя копировать свой подарок'],
   [ErrorCode.ForbiddenOffer, 'Нельзя скидываться на свои подарки'],
-  [ErrorCode.ForbiddenRaised, 'Сумма больше стоимости подарка']
+  [ErrorCode.ForbiddenRaised, 'Сумма больше стоимости подарка'],
 ]);
 
 export const code2status = new Map<ErrorCode, HttpStatus>([
@@ -45,5 +54,5 @@ export const code2status = new Map<ErrorCode, HttpStatus>([
   [ErrorCode.ForbiddenNotOwner, HttpStatus.FORBIDDEN],
   [ErrorCode.ForbiddenOwnWish, HttpStatus.FORBIDDEN],
   [ErrorCode.ForbiddenOffer, HttpStatus.FORBIDDEN],
-  [ErrorCode.ForbiddenRaised, HttpStatus.FORBIDDEN]
+  [ErrorCode.ForbiddenRaised, HttpStatus.FORBIDDEN],
 ]);

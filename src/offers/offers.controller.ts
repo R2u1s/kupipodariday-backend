@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param } from '@nestjs/common';
 import { OffersService } from './offers.service';
 import { CreateOfferDto } from './dto/create-offer.dto';
 import { AuthUser } from 'src/common/decorators/user.decorator';
@@ -12,7 +12,7 @@ export class OffersController {
 
   @UseGuards(JwtGuard)
   @Post()
-  async create(@Body() createOfferDto: CreateOfferDto, @AuthUser() user:User) {
+  async create(@Body() createOfferDto: CreateOfferDto, @AuthUser() user: User) {
     return await this.offersService.create(user.id, createOfferDto);
   }
 

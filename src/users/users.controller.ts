@@ -14,12 +14,12 @@ export class UsersController {
   constructor(
     private usersService: UsersService,
     private wishesService: WishesService,
-    ) {}
+  ) {}
 
   @Get('me')
-  async findMe(@AuthUser() user:User): Promise<User> {
+  async findMe(@AuthUser() user: User): Promise<User> {
     return await this.usersService.findOwn({
-      where: {id: user.id},
+      where: { id: user.id },
       select: {
         email: true,
         username: true,
@@ -28,17 +28,17 @@ export class UsersController {
         about: true,
         createdAt: true,
         updatedAt: true,
-      }
-    })
+      },
+    });
   }
 
   @Get('me/wishes')
-  async findWishesById(@AuthUser() user:User): Promise<Wish[]> {
+  async findWishesById(@AuthUser() user: User): Promise<Wish[]> {
     return await this.wishesService.findUserWishesById(user.id);
   }
 
   @Patch('me')
-  async update(@AuthUser() user:User, @Body() updateUserDto: UpdateUserDto) {
+  async update(@AuthUser() user: User, @Body() updateUserDto: UpdateUserDto) {
     return this.usersService.updateById(user.id, updateUserDto);
   }
 
@@ -50,15 +50,14 @@ export class UsersController {
   }
 
   @Get(':username')
-  async findByUsername(@Param('username') username: string):Promise<User> {
+  async findByUsername(@Param('username') username: string): Promise<User> {
     const user = await this.usersService.findByUsername(username);
     return user;
   }
 
   @Get(':username/wishes')
-  async findUserWishes(@Param('username') username: string):Promise<Wish[]> {
+  async findUserWishes(@Param('username') username: string): Promise<Wish[]> {
     const user = await this.usersService.findByUsername(username);
     return this.usersService.findUserWishes(user.id);
   }
-
 }

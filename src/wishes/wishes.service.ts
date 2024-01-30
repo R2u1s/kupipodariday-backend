@@ -11,12 +11,11 @@ import { User } from 'src/users/entities/user.entity';
 
 @Injectable()
 export class WishesService {
-
   constructor(
     @InjectRepository(Wish)
     private readonly wishRepository: Repository<Wish>,
     private readonly usersService: UsersService,
-  ) { }
+  ) {}
 
   async create(createWishDto: CreateWishDto, userId: number): Promise<Wish> {
     const owner = await this.usersService.findById(userId);
@@ -28,8 +27,8 @@ export class WishesService {
   async findUserWishesById(ownerId: number) {
     return await this.wishRepository.find({
       where: { owner: { id: ownerId } },
-      relations: ['owner']
-    })
+      relations: ['owner'],
+    });
   }
 
   async getWishById(id: number): Promise<Wish> {
@@ -78,7 +77,7 @@ export class WishesService {
     });
 
     if (user.id === wish.owner.id) {
-      throw new ServerException(ErrorCode.ForbiddenOwnWish)
+      throw new ServerException(ErrorCode.ForbiddenOwnWish);
     }
 
     const createWishDto: CreateWishDto = {
@@ -93,7 +92,7 @@ export class WishesService {
     await this.wishRepository.increment({ id: wishId }, 'copied', 1);
   }
 
-  //Обновление информации о набронной сумме 
+  //Обновление информации о набронной сумме
   async updateRaised(wishId: number, updateData: UpdateWishDto) {
     console.log(updateData);
     return await this.wishRepository.update(wishId, updateData);

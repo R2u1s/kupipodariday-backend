@@ -11,7 +11,7 @@ import { LocalStrategy } from './local.strategy';
 @Module({
   imports: [
     UsersModule,
-    PassportModule.register({defaultStrategy: 'jwt' }),
+    PassportModule.register({ defaultStrategy: 'jwt' }),
     ConfigModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],
@@ -19,7 +19,7 @@ import { LocalStrategy } from './local.strategy';
         secret: configService.get<string>('jwt_secret') || 'jwt_secret',
       }),
       inject: [ConfigService],
-   }),
+    }),
   ],
   controllers: [AuthController],
   providers: [AuthService, JwtStrategy, LocalStrategy],

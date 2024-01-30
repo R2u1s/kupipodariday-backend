@@ -12,11 +12,11 @@ export class AuthController {
     private authService: AuthService,
   ) {}
 
-  /**  
+  /**
    * Стратегия local автоматически достанет username и password из тела запроса
    * Если пароль будет верным, данные пользователя окажутся в объекте req.user
    */
-  
+
   @Post('signin')
   @UseGuards(LocalGuard)
   async signin(@Req() req: Request & { user: User }) {

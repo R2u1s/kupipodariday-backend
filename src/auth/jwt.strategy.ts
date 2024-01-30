@@ -14,12 +14,12 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       /* Указываем, что токен будет передаваться в заголовке Authorization в формате Bearer <token> */
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       /* Получаем секрет для подписи JWT токенов из конфигурации */
-      secretOrKey: configService.get<string>('jwt_secret') || 'jwt_secret'
+      secretOrKey: configService.get<string>('jwt_secret') || 'jwt_secret',
     });
   }
 
   /**
-   * Метод validate должен вернуть данные пользователя 
+   * Метод validate должен вернуть данные пользователя
    * В JWT стратегии в качестве параметра метод получает полезную нагрузку из токена
    */
   async validate(jwtPayload: { sub: number }) {

@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete } from '@nestjs/common';
 import { WishlistsService } from './wishlists.service';
 import { CreateWishlistDto } from './dto/create-wishlist.dto';
 import { UseGuards } from '@nestjs/common/decorators/core';
@@ -8,7 +8,7 @@ import { Wishlist } from './entities/wishlist.entity';
 
 @Controller('wishlistlists')
 export class WishlistsController {
-  constructor(private readonly wishlistsService: WishlistsService) { }
+  constructor(private readonly wishlistsService: WishlistsService) {}
 
   @UseGuards(JwtGuard)
   @Post()

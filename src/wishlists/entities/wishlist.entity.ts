@@ -1,5 +1,14 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToMany, ManyToOne, JoinTable } from 'typeorm';
-import { IsInt, IsString, Min, Length, IsUrl, MaxLength, IsOptional } from 'class-validator';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+  ManyToMany,
+  ManyToOne,
+  JoinTable,
+} from 'typeorm';
+import { IsInt, IsString, Length, IsUrl } from 'class-validator';
 import { Wish } from '../../wishes/entities/wish.entity';
 import { User } from '../../users/entities/user.entity';
 
@@ -24,7 +33,7 @@ export class Wishlist {
   @Length(1, 250)
   name: string;
 
-/*   // поле description. Описание подборки
+  /*   // поле description. Описание подборки
   @Column()
   @IsString()
   @IsOptional()

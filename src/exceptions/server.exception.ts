@@ -1,5 +1,5 @@
 import { HttpException, HttpStatus } from '@nestjs/common';
-import { ErrorCode,code2message,code2status } from './error-codes';
+import { ErrorCode, code2message, code2status } from './error-codes';
 
 export class ServerException extends HttpException {
   public code: ErrorCode;

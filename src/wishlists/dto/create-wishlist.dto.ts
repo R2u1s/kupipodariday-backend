@@ -1,13 +1,6 @@
-import {
-  IsString,
-  Length,
-  IsUrl,
-  IsArray,
-  IsOptional
-} from "class-validator";
+import { IsString, Length, IsUrl, IsArray, IsOptional } from 'class-validator';
 
 export class CreateWishlistDto {
-
   // поле name. Название списка
   @IsString()
   @Length(1, 250)

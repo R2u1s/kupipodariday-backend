@@ -1,5 +1,20 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany } from 'typeorm';
-import { IsInt, IsString, Min, IsNotEmpty, Length, IsUrl, IsEmail } from 'class-validator';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+  OneToMany,
+} from 'typeorm';
+import {
+  IsInt,
+  IsString,
+  Min,
+  IsNotEmpty,
+  Length,
+  IsUrl,
+  IsEmail,
+} from 'class-validator';
 import { Wish } from '../../wishes/entities/wish.entity';
 import { Offer } from '../../offers/entities/offer.entity';
 import { Wishlist } from '../../wishlists/entities/wishlist.entity';
@@ -11,7 +26,7 @@ export class User {
   @Min(0)
   @PrimaryGeneratedColumn()
   id: number;
-  
+
   // поле createdAt
   @CreateDateColumn()
   createdAt: Date;
@@ -22,32 +37,32 @@ export class User {
 
   // поле username
   @Column({
-    type: "varchar",
+    type: 'varchar',
     unique: true,
   })
   @IsString()
   @IsNotEmpty()
-  @Length(2,30)
+  @Length(2, 30)
   username: string;
 
   // поле about
-  @Column({ 
-    default: 'Пока ничего не рассказал о себе' 
+  @Column({
+    default: 'Пока ничего не рассказал о себе',
   })
   @IsString()
   @Length(2, 200)
   about: string;
 
   // поле avatar
-  @Column({ 
-    default: 'https://i.pravatar.cc/300' 
+  @Column({
+    default: 'https://i.pravatar.cc/300',
   })
   @IsUrl()
   avatar: string;
 
   // поле email
-  @Column({ 
-    unique: true 
+  @Column({
+    unique: true,
   })
   @IsEmail()
   email: string;
@@ -56,7 +71,7 @@ export class User {
   @Column()
   @IsString()
   password: string;
-  
+
   // поле wishes. Список желаемых подарков
   @OneToMany(() => Wish, (wish) => wish.owner)
   wishes: Wish[];
@@ -65,7 +80,7 @@ export class User {
   @OneToMany(() => Offer, (offer) => offer.user)
   offers: Offer[];
 
-  // поле wishlists. Список вишлистов, которые создал пользователь 
+  // поле wishlists. Список вишлистов, которые создал пользователь
   @OneToMany(() => Wishlist, (wishlist) => wishlist.owner)
   wishlists: Wishlist[];
 }

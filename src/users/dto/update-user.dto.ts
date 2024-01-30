@@ -6,9 +6,9 @@ import {
   Length,
   IsOptional,
   IsUrl,
-  IsEmail
-} from "class-validator";
-import { Transform } from "class-transformer";
+  IsEmail,
+} from 'class-validator';
+import { Transform } from 'class-transformer';
 
 export class UpdateUserDto extends PartialType(CreateUserDto) {
   @IsString()

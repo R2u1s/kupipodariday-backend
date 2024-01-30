@@ -13,4 +13,4 @@ export const typeOrmConfig: TypeOrmModuleOptions = {
   database: 'kupipodariday',
   entities: [Offer, User, Wish, Wishlist],
   synchronize: true,
-}
+};

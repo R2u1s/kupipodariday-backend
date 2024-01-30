@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { User } from '../users/entities/user.entity';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from '../users/users.service';
@@ -20,13 +20,10 @@ export class AuthService {
   }
 
   async validatePassword(username: string, password: string) {
-    const user = await this.usersService.findByUsername(username); 
+    const user = await this.usersService.findByUsername(username);
 
     /* В идеальном случае пароль обязательно должен быть захэширован */
-    const verifyPassword = await verifyHash(
-      password,
-      user.password,
-    );
+    const verifyPassword = await verifyHash(password, user.password);
 
     if (!verifyPassword) {
       throw new ServerException(ErrorCode.Unauthorized);
@@ -34,6 +31,7 @@ export class AuthService {
 
     if (user && verifyPassword) {
       /* Исключаем пароль из результата */
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { password, ...result } = user;
 
       return user;

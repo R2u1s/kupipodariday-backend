@@ -1,4 +1,12 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany, ManyToOne } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+  OneToMany,
+  ManyToOne,
+} from 'typeorm';
 import { IsInt, IsString, Min, Length, IsUrl } from 'class-validator';
 import { User } from '../../users/entities/user.entity';
 import { Offer } from '../../offers/entities/offer.entity';
@@ -40,13 +48,13 @@ export class Wish {
   price: number;
 
   // поле raised. Сумма предварительного сбор или сумма, которые пользователи сейчас готовы скинуть на подарок
-  @Column({ type: 'decimal', precision: 10, scale: 2, default: 0  })
+  @Column({ type: 'decimal', precision: 10, scale: 2, default: 0 })
   raised: number;
 
   // поле owner. Ссылка на пользователя, который добавил пожелание подарка
   @ManyToOne(() => User, (user) => user.wishes)
   owner: User;
-  
+
   // поле description. Описание подарка
   @Column()
   @IsString()
@@ -58,8 +66,8 @@ export class Wish {
   offers: Offer[];
 
   // поле copied. Содержит счетчик тех, кто скопировал подарок себе
-  @Column({ 
-    default: 0
+  @Column({
+    default: 0,
   })
   @IsInt()
   copied: number;

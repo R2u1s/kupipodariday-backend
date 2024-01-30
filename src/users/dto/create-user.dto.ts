@@ -4,10 +4,10 @@ import {
   Length,
   IsOptional,
   IsUrl,
-  IsEmail
-} from "class-validator";
+  IsEmail,
+} from 'class-validator';
 
-import { Transform } from "class-transformer";
+import { Transform } from 'class-transformer';
 
 export class CreateUserDto {
   @IsString()
