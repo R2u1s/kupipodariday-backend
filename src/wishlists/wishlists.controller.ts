@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Param, Delete, Patch } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Delete,
+  Patch,
+} from '@nestjs/common';
 import { WishlistsService } from './wishlists.service';
 import { CreateWishlistDto } from './dto/create-wishlist.dto';
 import { UseGuards } from '@nestjs/common/decorators/core';
@@ -10,7 +18,7 @@ import { User } from 'src/users/entities/user.entity';
 
 @Controller('wishlistlists')
 export class WishlistsController {
-  constructor(private readonly wishlistsService: WishlistsService) { }
+  constructor(private readonly wishlistsService: WishlistsService) {}
 
   @UseGuards(JwtGuard)
   @Post()
@@ -41,7 +49,15 @@ export class WishlistsController {
   //Изменение коллекции
   @UseGuards(JwtGuard)
   @Patch(':id')
-  async editWish(@Param('id') wishId: number, @AuthUser() user: User, @Body() updateWishlistDto: UpdateWishlistDto) {
-    return await this.wishlistsService.editWishlist(wishId, user, updateWishlistDto);
+  async editWish(
+    @Param('id') wishId: number,
+    @AuthUser() user: User,
+    @Body() updateWishlistDto: UpdateWishlistDto,
+  ) {
+    return await this.wishlistsService.editWishlist(
+      wishId,
+      user,
+      updateWishlistDto,
+    );
   }
 }

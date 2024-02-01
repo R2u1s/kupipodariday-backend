@@ -15,7 +15,7 @@ export class WishlistsService {
     private readonly wishesService: WishesService,
     @InjectRepository(Wishlist)
     private readonly wishlistRepository: Repository<Wishlist>,
-  ) { }
+  ) {}
 
   async create(
     user: User,
@@ -69,8 +69,11 @@ export class WishlistsService {
   }
 
   //Изменение информации о коллекции
-  async editWishlist(wishlistId: number, user: User, updateWishDto: UpdateWishlistDto) {
-
+  async editWishlist(
+    wishlistId: number,
+    user: User,
+    updateWishDto: UpdateWishlistDto,
+  ) {
     const wishlist = await this.getWishlistById(wishlistId);
 
     //Ошибка если не вледелец редактирует коллекцию

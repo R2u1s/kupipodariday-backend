@@ -15,7 +15,7 @@ export class WishesService {
     @InjectRepository(Wish)
     private readonly wishRepository: Repository<Wish>,
     private readonly usersService: UsersService,
-  ) { }
+  ) {}
 
   async create(createWishDto: CreateWishDto, userId: number): Promise<Wish> {
     const owner = await this.usersService.findById(userId);
@@ -82,16 +82,20 @@ export class WishesService {
     }
 
     //Проверяем не скопирован ли уже подарок к себе. Для этого сначала подгружаем список подарков пользователя
-    const userWishes = await this.usersService.findUserWishes(user.id)
+    const userWishes = await this.usersService.findUserWishes(user.id);
 
     //Далее проверяем нет ли подарка с такой же ссылкой на его страницу на сайте продавца (по id подарка
     // никак не проверить, потому что он каждый раз новый создается. Либо надо переделать схему, чтобы
     // id сохранялся при копировании)
-    const userHasWish = await userWishes.reduce(function (includeWish: Boolean, item: Wish): Boolean {
-      if (item.link === wish.link) { includeWish = true }
+    const userHasWish = await userWishes.reduce(function (
+      includeWish: boolean,
+      item: Wish,
+    ): boolean {
+      if (item.link === wish.link) {
+        includeWish = true;
+      }
       return includeWish;
     }, false);
-
 
     if (userHasWish) {
       throw new ServerException(ErrorCode.ForbiddenAlreadyCopied);
@@ -116,7 +120,6 @@ export class WishesService {
 
   //Изменение информации о подарке
   async editWish(wishId: number, user: User, updateWishDto: UpdateWishDto) {
-
     const wish = await this.getWishById(wishId);
 
     //Ошибка если не вледелец редактирует подарок

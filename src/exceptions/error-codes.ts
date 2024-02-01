@@ -17,7 +17,7 @@ export enum ErrorCode {
   ForbiddenAlreadyCopied,
   ForbiddenNotOwnWish,
   ForbiddenAlreadyOffered,
-  ForbiddenNotOwnWishlist
+  ForbiddenNotOwnWishlist,
 }
 
 export const code2message = new Map<ErrorCode, string>([
@@ -45,7 +45,10 @@ export const code2message = new Map<ErrorCode, string>([
   [ErrorCode.ForbiddenRaised, 'Сумма больше стоимости подарка'],
   [ErrorCode.ForbiddenAlreadyCopied, 'Подарок уже есть в вашем списке'],
   [ErrorCode.ForbiddenNotOwnWish, 'Нельзя редактировать чужие подарки'],
-  [ErrorCode.ForbiddenAlreadyOffered, 'Нельзя редактировать стоимость, если уже скинулись на него'],
+  [
+    ErrorCode.ForbiddenAlreadyOffered,
+    'Нельзя редактировать стоимость, если уже скинулись на него',
+  ],
   [ErrorCode.ForbiddenNotOwnWishlist, 'Нельзя редактировать чужие коллекции'],
 ]);
 

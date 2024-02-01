@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Param, Delete, Patch } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Delete,
+  Patch,
+} from '@nestjs/common';
 import { WishesService } from './wishes.service';
 import { CreateWishDto } from './dto/create-wish.dto';
 import { AuthUser } from 'src/common/decorators/user.decorator';
@@ -10,7 +18,7 @@ import { UpdateWishDto } from './dto/update-wish.dto';
 
 @Controller('wishes')
 export class WishesController {
-  constructor(private readonly wishesService: WishesService) { }
+  constructor(private readonly wishesService: WishesService) {}
 
   //Поиск последних 40 подарков
   @Get('last')
@@ -55,7 +63,11 @@ export class WishesController {
   //Изменение подарка
   @UseGuards(JwtGuard)
   @Patch(':id')
-  async editWish(@Param('id') wishId: number, @AuthUser() user: User, @Body() updateWishDto: UpdateWishDto) {
+  async editWish(
+    @Param('id') wishId: number,
+    @AuthUser() user: User,
+    @Body() updateWishDto: UpdateWishDto,
+  ) {
     return await this.wishesService.editWish(wishId, user, updateWishDto);
   }
 }

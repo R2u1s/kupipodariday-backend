@@ -14,7 +14,7 @@ export class OffersService {
     private readonly offersRepository: Repository<Offer>,
     private readonly wishesService: WishesService,
     private readonly dataSource: DataSource,
-  ) { }
+  ) {}
 
   async create(userId: number, createOfferDto: CreateOfferDto) {
     const queryRunner = this.dataSource.createQueryRunner();

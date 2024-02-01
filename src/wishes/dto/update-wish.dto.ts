@@ -30,7 +30,6 @@ export class UpdateWishDto extends PartialType(CreateWishDto) {
   @IsOptional()
   description?: string;
 
-
   @IsNumber()
   @IsOptional()
   raised?: number;
