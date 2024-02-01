@@ -111,7 +111,22 @@ export class WishesService {
 
   //Обновление информации о набронной сумме
   async updateRaised(wishId: number, updateData: UpdateWishDto) {
-    console.log(updateData);
     return await this.wishRepository.update(wishId, updateData);
+  }
+
+  //Изменение информации о подарке
+  async editWish(wishId: number, user: User, updateWishDto: UpdateWishDto) {
+
+    const wish = await this.getWishById(wishId);
+
+    if (user.id !== wish.owner.id) {
+      throw new ServerException(ErrorCode.ForbiddenNotOwnWish);
+    }
+
+    if (wish.raised && updateWishDto.price > 0) {
+      throw new ServerException(ErrorCode.ForbiddenAlreadyOffered);
+    }
+
+    return await this.wishRepository.update(wishId, updateWishDto);
   }
 }
