@@ -92,7 +92,7 @@ export class WishesService {
       return includeWish;
     }, false);
 
-    
+
     if (userHasWish) {
       throw new ServerException(ErrorCode.ForbiddenAlreadyCopied);
     }
@@ -119,10 +119,12 @@ export class WishesService {
 
     const wish = await this.getWishById(wishId);
 
+    //Ошибка если не вледелец редактирует подарок
     if (user.id !== wish.owner.id) {
       throw new ServerException(ErrorCode.ForbiddenNotOwnWish);
     }
 
+    //Ошибка если запрашивается изменение цены,а на подарок уже скинули деньги
     if (wish.raised && updateWishDto.price > 0) {
       throw new ServerException(ErrorCode.ForbiddenAlreadyOffered);
     }

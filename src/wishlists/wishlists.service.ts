@@ -7,6 +7,7 @@ import { ServerException } from 'src/exceptions/server.exception';
 import { ErrorCode } from 'src/exceptions/error-codes';
 import { User } from 'src/users/entities/user.entity';
 import { WishesService } from 'src/wishes/wishes.service';
+import { UpdateWishlistDto } from './dto/update-wishlist.dto';
 
 @Injectable()
 export class WishlistsService {
@@ -14,7 +15,7 @@ export class WishlistsService {
     private readonly wishesService: WishesService,
     @InjectRepository(Wishlist)
     private readonly wishlistRepository: Repository<Wishlist>,
-  ) {}
+  ) { }
 
   async create(
     user: User,
@@ -65,5 +66,18 @@ export class WishlistsService {
     }
 
     return await this.wishlistRepository.delete(wishlistId);
+  }
+
+  //Изменение информации о коллекции
+  async editWishlist(wishlistId: number, user: User, updateWishDto: UpdateWishlistDto) {
+
+    const wishlist = await this.getWishlistById(wishlistId);
+
+    //Ошибка если не вледелец редактирует коллекцию
+    if (user.id !== wishlist.owner.id) {
+      throw new ServerException(ErrorCode.ForbiddenNotOwnWishlist);
+    }
+
+    return await this.wishlistRepository.update(wishlistId, updateWishDto);
   }
 }
